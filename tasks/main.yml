@@ -1,0 +1,43 @@
+---
+- name: Install opener script
+  ansible.builtin.template:
+    src: open-url-file.sh.j2
+    dest: "{{ url_file_handler_script_path }}"
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: Install shared-mime-info package for application/x-mswinurl
+  ansible.builtin.template:
+    src: x-mswinurl-mime.xml.j2
+    dest: "{{ url_file_handler_mime_package }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Update mime database
+  become: true
+
+- name: Install desktop entry for the opener
+  ansible.builtin.template:
+    src: open-url-file.desktop.j2
+    dest: "{{ url_file_handler_desktop_file }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Update desktop database
+  become: true
+
+- name: Set as default handler for the mimetype
+  community.general.ini_file:
+    path: "{{ item }}"
+    section: Default Applications
+    option: "{{ url_file_handler_mimetype }}"
+    value: "{{ url_file_handler_desktop_file | basename }}"
+    create: true
+    owner: root
+    group: root
+    mode: "0644"
+    no_extra_spaces: true
+  loop: "{{ url_file_handler_mimeapps_lists }}"
+  become: true

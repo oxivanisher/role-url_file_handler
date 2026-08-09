@@ -1,0 +1,10 @@
+[Desktop Entry]
+# {{ ansible_managed }}
+Type=Application
+Name=Windows Internet Shortcut
+Comment=Open a .url shortcut in the default browser
+Exec={{ url_file_handler_script_path }} %f
+Icon=text-html
+Terminal=false
+NoDisplay=true
+MimeType={{ url_file_handler_mimetype }};

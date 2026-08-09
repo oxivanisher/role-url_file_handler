@@ -1,0 +1,23 @@
+---
+# MIME type used to identify Windows .url (Internet Shortcut) files
+url_file_handler_mimetype: application/x-mswinurl
+
+# Where the opener script gets installed
+url_file_handler_script_path: /usr/local/bin/open-url-file.sh
+
+# Desktop entry that wraps the script for the file-manager/xdg-open layer
+url_file_handler_desktop_file: /usr/share/applications/open-url-file.desktop
+
+# shared-mime-info package defining the mimetype+glob (harmless even if the
+# distro already ships this type; ours simply reasserts it)
+url_file_handler_mime_package: /usr/share/mime/packages/x-mswinurl.xml
+
+# Both locations are read by different desktop environments/tools for
+# system-wide default application mappings, so we set both.
+url_file_handler_mimeapps_lists:
+  - /usr/share/applications/mimeapps.list
+  - /etc/xdg/mimeapps.list
+
+# Emit a desktop notification (via notify-send, if present) when a .url file
+# has no URL= line instead of failing silently
+url_file_handler_use_notify: true

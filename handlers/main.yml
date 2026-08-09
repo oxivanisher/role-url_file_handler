@@ -1,0 +1,16 @@
+---
+- name: Update mime database
+  ansible.builtin.command:
+    argv:
+      - update-mime-database
+      - /usr/share/mime
+  become: true
+  changed_when: true
+
+- name: Update desktop database
+  ansible.builtin.command:
+    argv:
+      - update-desktop-database
+      - /usr/share/applications
+  become: true
+  changed_when: true

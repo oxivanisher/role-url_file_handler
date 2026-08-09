@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# {{ ansible_managed }}
+#
+# Opens a Windows .url (Internet Shortcut) file in the system default
+# browser by extracting the URL= line and handing it to xdg-open.
+
+set -euo pipefail
+
+if [[ $# -lt 1 ]]; then
+    echo "Usage: $(basename "$0") <file.url>" >&2
+    exit 2
+fi
+
+file="$1"
+url=$(grep -m1 -i '^URL=' "$file" | cut -d= -f2- | tr -d '\r\n')
+
+if [[ -z "$url" ]]; then
+{% if url_file_handler_use_notify %}
+    command -v notify-send >/dev/null 2>&1 && \
+        notify-send "Open URL file" "No URL= line found in $(basename "$file")"
+{% endif %}
+    echo "No URL= line found in $file" >&2
+    exit 1
+fi
+
+exec xdg-open "$url"
