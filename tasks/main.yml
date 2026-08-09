@@ -28,16 +28,10 @@
   notify: Update desktop database
   become: true
 
-- name: Set as default handler for the mimetype
-  community.general.ini_file:
-    path: "{{ item }}"
-    section: Default Applications
-    option: "{{ url_file_handler_mimetype }}"
-    value: "{{ url_file_handler_desktop_file | basename }}"
-    create: true
-    owner: root
-    group: root
-    mode: "0644"
-    no_extra_spaces: true
-  loop: "{{ url_file_handler_mimeapps_lists }}"
+- name: Set Vivaldi default application
+  community.general.gio_mime:
+    mime_type: "{{ url_file_handler_mimetype }}"
+    handler: "{{ url_file_handler_desktop_file | basename }}"
   become: true
+  become_user: "{{ item }}"
+  loop: "{{ url_file_handler_os_users }}"
