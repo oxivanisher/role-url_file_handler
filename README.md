@@ -1,6 +1,6 @@
 url_file_handler
 ================
-[![Ansible Lint](https://github.com/oxivanisher/role-spotify/actions/workflows/ansible-lint.yml/badge.svg)](https://github.com/oxivanisher/role-url_file_handler/actions/workflows/ansible-lint.yml)
+[![Ansible Lint](https://github.com/oxivanisher/role-url_file_handler/actions/workflows/ansible-lint.yml/badge.svg)](https://github.com/oxivanisher/role-url_file_handler/actions/workflows/ansible-lint.yml)
 
 Open .url files from Windows also on Linux in your default browser.
 
